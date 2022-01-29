@@ -5,5 +5,11 @@ spring:
     password: password
     driver-class-name: org.postgresql.Driver
   liquibase:
-    change-log: classpath:/db/changelog/changelog-master.yml
-    enabled: false
+    change-log: classpath:/liquibase/changelog-master.yml
+    enabled: true
+  jpa:
+    open-in-view: false
+
+server:
+  error:
+    include-message: always
