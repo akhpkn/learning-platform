@@ -13,3 +13,10 @@ spring:
 server:
   error:
     include-message: always
+
+jsa:
+  aws:
+    access_key_id:
+    secret_access_key:
+    region:
+    bucket:

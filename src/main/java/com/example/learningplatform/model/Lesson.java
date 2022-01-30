@@ -27,6 +27,8 @@ public class Lesson {
 
     private String title;
 
+    private Video video;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId
     private Course course;

@@ -1,18 +1,18 @@
 package com.example.learningplatform.controller;
 
 import com.example.learningplatform.controller.model.LessonCreationRequest;
+import com.example.learningplatform.controller.model.UploadFileResponse;
 import com.example.learningplatform.dto.LessonDto;
 import com.example.learningplatform.mapper.EntityMapper;
 import com.example.learningplatform.model.Lesson;
+import com.example.learningplatform.model.Video;
 import com.example.learningplatform.service.LessonService;
+import com.example.learningplatform.service.VideoService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,6 +23,7 @@ public class LessonController {
 
     private final LessonService lessonService;
     private final EntityMapper mapper;
+    private final VideoService videoService;
 
     @GetMapping
     public List<LessonDto> getAllByCourseId(@RequestParam("courseId") Long courseId) {
@@ -36,4 +37,30 @@ public class LessonController {
         Lesson lesson = lessonService.createLesson(request.getTitle(), request.getCourseId());
         return mapper.toDto(lesson);
     }
+
+    @PostMapping("{lessonId}/video")
+    public UploadFileResponse addVideoToLesson(@PathVariable("lessonId") Long lessonId,
+                                               @RequestParam("file") MultipartFile file) throws IOException {
+        Lesson lesson = lessonService.getLessonById(lessonId);
+        if (lesson.getVideo() != null)
+            videoService.deleteVideo(lesson.getVideo());
+
+        Video video = videoService.store(file);
+        lesson.setVideo(video);
+        lessonService.saveLesson(lesson);
+
+        return new UploadFileResponse(video.getUrl(), video.getType(), file.getSize());
+    }
+
+//    @PostMapping("{lessonId}/videourl")
+//    public addVideoUrl(@PathVariable("lessonId") Long lessonId,
+//                                         @RequestParam("url") String url) {
+//        Lesson lesson = lessonRepository.findByLessonId(lessonId);
+//        Video video = videoService.saveUrl(url);
+//
+//        lesson.setVideo(video);
+//        lessonRepository.save(lesson);
+//
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    }
 }

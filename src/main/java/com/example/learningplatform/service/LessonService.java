@@ -33,4 +33,12 @@ public class LessonService {
 
         return lessonRepository.save(lesson);
     }
+
+    public Lesson saveLesson(Lesson lesson){
+        return lessonRepository.save(lesson);
+    }
+
+    public Lesson getLessonById(Long lessonId){
+        return lessonRepository.getById(lessonId);
+    }
 }
