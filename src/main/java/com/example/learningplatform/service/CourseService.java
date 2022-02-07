@@ -1,6 +1,8 @@
 package com.example.learningplatform.service;
 
+import com.example.learningplatform.dto.CourseDto;
 import com.example.learningplatform.exception.CourseNotFoundException;
+import com.example.learningplatform.mapper.EntityMapper;
 import com.example.learningplatform.model.Course;
 import com.example.learningplatform.repository.CourseRepository;
 import lombok.AllArgsConstructor;
@@ -13,6 +15,7 @@ import java.util.List;
 public class CourseService {
 
     private final CourseRepository courseRepository;
+    private final EntityMapper mapper;
 
     public List<Course> getAll() {
         return courseRepository.findAll();
@@ -28,6 +31,17 @@ public class CourseService {
         course.setTitle(title);
         course.setDescription(description);
 
+        return courseRepository.save(course);
+    }
+
+    public void deleteCourse(Long courseId){
+        courseRepository.deleteById(courseId);
+    }
+
+    public Course editCourse(CourseDto courseDto){
+        Course course = courseRepository.findById(courseDto.getId())
+                .orElseThrow(CourseNotFoundException::new);
+        mapper.updateCourseFromDto(courseDto, course);
         return courseRepository.save(course);
     }
 }

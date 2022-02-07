@@ -1,6 +1,7 @@
 package com.example.learningplatform.controller;
 
 import com.example.learningplatform.controller.model.CourseCreationRequest;
+import com.example.learningplatform.controller.model.CourseEditingRequest;
 import com.example.learningplatform.dto.CourseDto;
 import com.example.learningplatform.dto.CourseView;
 import com.example.learningplatform.dto.LessonView;
@@ -10,12 +11,7 @@ import com.example.learningplatform.model.Lesson;
 import com.example.learningplatform.service.CourseService;
 import com.example.learningplatform.service.LessonService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -65,5 +61,15 @@ public class CourseController {
     public CourseDto createCourse(@RequestBody CourseCreationRequest request) {
         Course course = courseService.createCourse(request.getTitle(), request.getDescription());
         return mapper.toDto(course);
+    }
+
+    @DeleteMapping("/{courseId}")
+    public void deleteById(@PathVariable Long courseId) {
+        courseService.deleteCourse(courseId);
+    }
+
+    @PutMapping("/{courseId}")
+    public Course editCourse(@RequestBody CourseDto request) {
+        return courseService.editCourse(request);
     }
 }
