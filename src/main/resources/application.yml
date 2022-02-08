@@ -9,6 +9,9 @@ spring:
     enabled: true
   jpa:
     open-in-view: false
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 
 server:
   error:
