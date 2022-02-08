@@ -1,6 +1,7 @@
 package com.example.learningplatform.model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -8,6 +9,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "files")
 @Inheritance(strategy = InheritanceType.JOINED)
+@NoArgsConstructor
 public class File {
 
     @Id
@@ -17,7 +19,7 @@ public class File {
             sequenceName = "file_id_seq",
             allocationSize = 1
     )
-    private Long fileId;
+    private Long id;
 
     private String url;
 

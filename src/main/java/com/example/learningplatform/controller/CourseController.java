@@ -69,7 +69,8 @@ public class CourseController {
     }
 
     @PutMapping("/{courseId}")
-    public Course editCourse(@RequestBody CourseDto request) {
-        return courseService.editCourse(request);
+    public CourseDto editCourse(@RequestBody CourseDto request) {
+        Course course = courseService.editCourse(request);
+        return mapper.toDto(course);
     }
 }

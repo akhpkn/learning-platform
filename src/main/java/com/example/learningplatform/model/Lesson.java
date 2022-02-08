@@ -2,14 +2,7 @@ package com.example.learningplatform.model;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "lessons")
@@ -27,6 +20,7 @@ public class Lesson {
 
     private String title;
 
+    @OneToOne(fetch = FetchType.LAZY)
     private Video video;
 
     @ManyToOne(fetch = FetchType.LAZY)
