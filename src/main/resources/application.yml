@@ -16,3 +16,7 @@ spring:
 server:
   error:
     include-message: always
+
+jwt:
+  secret: "JWT secret key"
+  expirationInMs: 604800000
