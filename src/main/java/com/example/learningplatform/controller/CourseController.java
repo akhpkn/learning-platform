@@ -36,6 +36,13 @@ public class CourseController {
             .collect(Collectors.toList());
     }
 
+    @GetMapping("/created-by-employee")
+    public List<CourseDto> getCoursesCreatedByEmployee() {
+        return courseService.getCoursesCreatedByAuthorizedEmployee().stream()
+            .map(mapper::toDto)
+            .collect(Collectors.toList());
+    }
+
     @GetMapping("/{courseId}")
     public CourseDto getById(@PathVariable Long courseId) {
         Course course = courseService.getCourse(courseId);
