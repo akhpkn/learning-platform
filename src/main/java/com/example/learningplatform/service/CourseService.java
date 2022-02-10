@@ -58,4 +58,9 @@ public class CourseService {
         mapper.updateCourseFromDto(courseDto, course);
         return courseRepository.save(course);
     }
+
+
+    public List<Course> getCoursesByUserId(Long userId) {
+        return courseRepository.findAll();
+    }
 }

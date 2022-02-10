@@ -4,6 +4,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.example.learningplatform.exception.FileNotFoundException;
 import com.example.learningplatform.model.Video;
 import com.example.learningplatform.repository.FileRepository;
 import lombok.RequiredArgsConstructor;
@@ -80,6 +81,6 @@ public class VideoService {
     }
 
     public Video getFile(Long fileId) {
-        return (Video) fileRepository.findByFileId(fileId);
+        return (Video) fileRepository.findById(fileId).orElseThrow(FileNotFoundException::new);
     }
 }

@@ -22,7 +22,8 @@ jwt:
   expirationInMs: 604800000
 jsa:
   aws:
-    access_key_id:
-    secret_access_key:
-    region:
-    bucket:
+    access_key_id: AKIA4OZ6T3ESC44PO5M3
+    secret_access_key: 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
+  s3:
+    region: eu-west-2
+    bucket: lacbucket

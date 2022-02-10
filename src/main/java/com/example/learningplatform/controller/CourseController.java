@@ -1,7 +1,6 @@
 package com.example.learningplatform.controller;
 
 import com.example.learningplatform.controller.model.CourseCreationRequest;
-import com.example.learningplatform.controller.model.CourseEditingRequest;
 import com.example.learningplatform.dto.CourseDto;
 import com.example.learningplatform.dto.CourseView;
 import com.example.learningplatform.dto.LessonView;
@@ -28,8 +27,8 @@ public class CourseController {
     @GetMapping
     public List<CourseDto> getAllCourses() {
         return courseService.getAll().stream()
-            .map(mapper::toDto)
-            .collect(Collectors.toList());
+                .map(mapper::toDto)
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/created-by-employee")
@@ -45,6 +44,13 @@ public class CourseController {
         return mapper.toDto(course);
     }
 
+    @GetMapping("/user/{userId}")
+    public List<CourseDto> getByUser(@PathVariable Long userId) {
+        return courseService.getCoursesByUserId(userId).stream()
+                .map(mapper::toDto)
+                .collect(Collectors.toList());
+    }
+
     @GetMapping("/{courseId}/view")
     public CourseView getCourseView(@PathVariable Long courseId) {
         Course course = courseService.getCourse(courseId);
@@ -56,9 +62,9 @@ public class CourseController {
         view.setTitle(course.getTitle());
         view.setDescription(course.getDescription());
         view.setLessons(
-            lessons.stream()
-                .map(lesson -> new LessonView(lesson.getId(), lesson.getTitle()))
-                .collect(Collectors.toList())
+                lessons.stream()
+                        .map(lesson -> new LessonView(lesson.getId(), lesson.getTitle()))
+                        .collect(Collectors.toList())
         );
 
         return view;
