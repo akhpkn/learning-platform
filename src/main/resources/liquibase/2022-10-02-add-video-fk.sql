@@ -1,0 +1,1 @@
+alter table lessons add column video_id bigint references files(id);

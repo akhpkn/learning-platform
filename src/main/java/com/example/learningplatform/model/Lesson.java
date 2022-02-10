@@ -21,7 +21,8 @@ public class Lesson {
     private String title;
 
     @OneToOne(fetch = FetchType.LAZY)
-    private Video video;
+    @JoinColumn(name = "video_id")
+    private File video;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId

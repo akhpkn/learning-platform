@@ -5,7 +5,6 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.example.learningplatform.exception.FileNotFoundException;
-import com.example.learningplatform.model.Video;
 import com.example.learningplatform.repository.FileRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -31,13 +30,13 @@ public class VideoService {
 
     private static final String ENDPOINT_URL = "https://lacbucket.s3.eu-west-2.amazonaws.com";
 
-    public Video store(MultipartFile multipartFile) throws IOException {
+    public com.example.learningplatform.model.File store(MultipartFile multipartFile) throws IOException {
         String extension = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf('.'));
 
         String fileName = generateFileName(multipartFile.getOriginalFilename());
 
         String url = upload(fileName + extension, multipartFile);
-        Video video = new Video(url, multipartFile.getContentType());
+        com.example.learningplatform.model.File video = new com.example.learningplatform.model.File(url, multipartFile.getContentType());
 
         return fileRepository.save(video);
     }
@@ -64,14 +63,14 @@ public class VideoService {
         return fileUrl;
     }
 
-    public void deleteVideo(Video video) {
+    public void deleteVideo(com.example.learningplatform.model.File video) {
         String key = video.getUrl().substring(ENDPOINT_URL.length() + 1);
         fileRepository.delete(video);
         awsS3Client.deleteObject(bucketName, key);
     }
 
-    public Video saveUrl(String url) {
-        Video video = new Video(url, "empty");
+    public com.example.learningplatform.model.File saveUrl(String url) {
+        com.example.learningplatform.model.File video = new com.example.learningplatform.model.File(url, "empty");
         fileRepository.save(video);
         return video;
     }
@@ -80,7 +79,7 @@ public class VideoService {
         return DigestUtils.md5Hex(originalName + LocalDateTime.now());
     }
 
-    public Video getFile(Long fileId) {
-        return (Video) fileRepository.findById(fileId).orElseThrow(FileNotFoundException::new);
+    public com.example.learningplatform.model.File getFile(Long fileId) {
+        return fileRepository.findById(fileId).orElseThrow(FileNotFoundException::new);
     }
 }

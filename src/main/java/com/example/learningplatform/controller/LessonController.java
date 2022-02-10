@@ -4,8 +4,8 @@ import com.example.learningplatform.controller.model.LessonCreationRequest;
 import com.example.learningplatform.controller.model.UploadFileResponse;
 import com.example.learningplatform.dto.LessonDto;
 import com.example.learningplatform.mapper.EntityMapper;
+import com.example.learningplatform.model.File;
 import com.example.learningplatform.model.Lesson;
-import com.example.learningplatform.model.Video;
 import com.example.learningplatform.service.LessonService;
 import com.example.learningplatform.service.VideoService;
 import lombok.AllArgsConstructor;
@@ -42,10 +42,14 @@ public class LessonController {
     public UploadFileResponse addVideoToLesson(@PathVariable("lessonId") Long lessonId,
                                                @RequestParam("file") MultipartFile file) throws IOException {
         Lesson lesson = lessonService.getLessonById(lessonId);
-        if (lesson.getVideo() != null)
-            videoService.deleteVideo(lesson.getVideo());
+        if (lesson.getVideo() != null){
+            File video = lesson.getVideo();
+            lesson.setVideo(null);
+            lessonService.saveLesson(lesson);
+            videoService.deleteVideo(video);
+        }
 
-        Video video = videoService.store(file);
+        com.example.learningplatform.model.File video = videoService.store(file);
         lesson.setVideo(video);
         lessonService.saveLesson(lesson);
 

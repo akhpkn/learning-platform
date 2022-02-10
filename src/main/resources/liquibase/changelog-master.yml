@@ -6,4 +6,6 @@ databaseChangeLog:
   - include:
       file: liquibase/2022-02-07-roles.sql
   - include:
-      file: liquibase/2022-10-02-add-video.sql
+      file: liquibase/2022-10-02-add-video-fk.sql
+  - include:
+      file: liquibase/2022-10-02-add-files.sql

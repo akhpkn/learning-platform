@@ -13,10 +13,10 @@ import javax.persistence.*;
 public class File {
 
     @Id
-    @GeneratedValue(generator = "file_id_seq_gen")
+    @GeneratedValue(generator = "files_id_seq_gen")
     @SequenceGenerator(
-            name = "file_id_seq_gen",
-            sequenceName = "file_id_seq",
+            name = "files_id_seq_gen",
+            sequenceName = "files_id_seq",
             allocationSize = 1
     )
     private Long id;
