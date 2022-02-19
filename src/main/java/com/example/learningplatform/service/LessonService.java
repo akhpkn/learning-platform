@@ -1,6 +1,7 @@
 package com.example.learningplatform.service;
 
 import com.example.learningplatform.exception.CourseNotFoundException;
+import com.example.learningplatform.exception.LessonNotFoundException;
 import com.example.learningplatform.exception.MissingRightsException;
 import com.example.learningplatform.model.Course;
 import com.example.learningplatform.model.Employee;
@@ -41,5 +42,13 @@ public class LessonService {
         lesson.setCourse(course);
 
         return lessonRepository.save(lesson);
+    }
+
+    public Lesson saveLesson(Lesson lesson){
+        return lessonRepository.save(lesson);
+    }
+
+    public Lesson getLessonById(Long lessonId){
+        return lessonRepository.findById(lessonId).orElseThrow(LessonNotFoundException::new);
     }
 }

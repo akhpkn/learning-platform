@@ -20,3 +20,7 @@ server:
 jwt:
   secret: "JWT secret key"
   expirationInMs: 604800000
+jsa:
+  s3:
+    region: eu-west-2
+    bucket: lacbucket
