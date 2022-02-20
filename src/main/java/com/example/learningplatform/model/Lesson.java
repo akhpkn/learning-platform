@@ -25,6 +25,5 @@ public class Lesson {
     private File video;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId
     private Course course;
 }
