@@ -11,3 +11,5 @@ databaseChangeLog:
       file: liquibase/2022-10-02-add-files.sql
   - include:
       file: liquibase/2022-02-20-course-assignment.sql
+  - include:
+      file: liquibase/2022-03-13-progress.sql
