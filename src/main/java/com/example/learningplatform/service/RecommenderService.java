@@ -40,7 +40,7 @@ public class RecommenderService {
     int prefCounter = 0;
     Map<UUID, Integer> uuidToIntId = new HashMap<>();
 
-    public void getPreferencesNew() throws TasteException {
+    public void getPreferencesNew(UUID person) throws TasteException {
         Map<UUID, List<Score>> groupedScores = new HashMap<>();
         FastByIDMap<PreferenceArray> preferences = new FastByIDMap<>();
 
@@ -70,7 +70,7 @@ public class RecommenderService {
         System.out.println("Number Of Users : " + model.getNumUsers());
 
         System.out.println("Item ids for user 1");
-        FastIDSet set = model.getItemIDsFromUser(uuidToIntId.get(UUID.fromString("f69d6a1e-c4ff-405a-b873-30693933b86a")));
+        FastIDSet set = model.getItemIDsFromUser(uuidToIntId.get(person));
         LongPrimitiveIterator iter = set.iterator();
         while (iter.hasNext()) {
             System.out.print(iter.nextLong() + " ");

@@ -94,7 +94,7 @@ public class CourseController {
 
     @GetMapping("/recs")
     public List<RecommendedItem> getRecommendations(@RequestParam String personUUID, @RequestParam Integer numOfRecs) throws TasteException {
-        recommenderService.getPreferencesNew();
+        recommenderService.getPreferencesNew(UUID.fromString(personUUID));
         return recommenderService.recommendNew(UUID.fromString(personUUID),numOfRecs);
     }
 }
