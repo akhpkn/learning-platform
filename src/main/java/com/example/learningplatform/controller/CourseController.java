@@ -9,10 +9,14 @@ import com.example.learningplatform.model.Course;
 import com.example.learningplatform.model.Lesson;
 import com.example.learningplatform.service.CourseService;
 import com.example.learningplatform.service.LessonService;
+import com.example.learningplatform.service.RecommenderService;
 import lombok.AllArgsConstructor;
+import org.apache.mahout.cf.taste.common.TasteException;
+import org.apache.mahout.cf.taste.recommender.RecommendedItem;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
@@ -22,6 +26,7 @@ public class CourseController {
 
     private final CourseService courseService;
     private final LessonService lessonService;
+    private final RecommenderService recommenderService;
     private final EntityMapper mapper;
 
     @GetMapping
@@ -85,5 +90,11 @@ public class CourseController {
     public CourseDto editCourse(@RequestBody CourseDto request) {
         Course course = courseService.editCourse(request);
         return mapper.toDto(course);
+    }
+
+    @GetMapping("/recs")
+    public List<RecommendedItem> getRecommendations(@RequestParam String personUUID, @RequestParam Integer numOfRecs) throws TasteException {
+        recommenderService.getPreferencesNew(UUID.fromString(personUUID));
+        return recommenderService.recommendNew(UUID.fromString(personUUID),numOfRecs);
     }
 }
