@@ -9,3 +9,5 @@ databaseChangeLog:
       file: liquibase/2022-10-02-add-video-fk.sql
   - include:
       file: liquibase/2022-10-02-add-files.sql
+  - include:
+      file: liquibase/2022-03-13-add-score.sql
